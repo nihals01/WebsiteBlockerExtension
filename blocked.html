@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Website Blocked</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    
+    .blocked-container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 60px 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 90%;
+    }
+    
+    .blocked-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+      display: block;
+    }
+    
+    .blocked-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+    
+    .blocked-message {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    
+    .blocked-url {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px;
+      border-radius: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      word-break: break-all;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary {
+      background: #4CAF50;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #45a049;
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .productivity-tip {
+      margin-top: 40px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      border-left: 4px solid #4CAF50;
+    }
+    
+    .tip-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #4CAF50;
+    }
+    
+    .tip-text {
+      font-size: 14px;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .blocked-container {
+      animation: fadeIn 0.6s ease-out;
+    }
+    
+    @media (max-width: 480px) {
+      .blocked-container {
+        padding: 40px 20px;
+      }
+      
+      .blocked-title {
+        font-size: 24px;
+      }
+      
+      .blocked-message {
+        font-size: 16px;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="blocked-container">
+    <div class="blocked-icon">🛡️</div>
+    <h1 class="blocked-title">Website Blocked</h1>
+    <p class="blocked-message">
+      This website has been blocked to help you stay focused and productive.
+    </p>
+    <div class="blocked-url" id="blockedUrl">
+      Loading...
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="goBack()">← Go Back</button>
+      <button class="btn btn-secondary" onclick="openExtension()">⚙️ Manage Blocker</button>
+    </div>
+    
+    <div class="productivity-tip">
+      <div class="tip-title">💡 Productivity Tip</div>
+      <div class="tip-text" id="productivityTip">
+        Take a 5-minute break to stretch, breathe deeply, or drink some water. Your mind will thank you!
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Display the blocked URL
+    function displayBlockedUrl() {
+      const urlElement = document.getElementById('blockedUrl');
+      const currentUrl = window.location.href;
+      
+      // Extract the original URL from the extension URL if possible
+      const urlParams = new URLSearchParams(window.location.search);
+      const originalUrl = urlParams.get('url') || 'Unknown URL';
+      
+      urlElement.textContent = originalUrl !== 'Unknown URL' ? originalUrl : window.location.hostname;
+    }
+    
+    // Go back to previous page
+    function goBack() {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = 'chrome://newtab/';
+      }
+    }
+    
+    // Open extension popup (this won't work directly, but provides instruction)
+    function openExtension() {
+      alert('Click the Website Blocker extension icon in your browser toolbar to manage blocked sites.');
+    }
+    
+    // Productivity tips
+    const tips = [
+      "Take a 5-minute break to stretch, breathe deeply, or drink some water. Your mind will thank you!",
+      "Try the Pomodoro Technique: Work for 25 minutes, then take a 5-minute break.",
+      "Write down three things you want to accomplish today and focus on those.",
+      "Step away from the screen and look at something 20 feet away for 20 seconds.",
+      "Take a short walk or do some light exercise to boost your energy and focus.",
+      "Practice deep breathing: Inhale for 4 counts, hold for 4, exhale for 4.",
+      "Organize your workspace to reduce distractions and improve concentration.",
+      "Set a specific goal for what you want to achieve in the next hour.",
+      "Listen to instrumental music or nature sounds to help maintain focus.",
+      "Stay hydrated! Drink a glass of water and notice how it affects your alertness."
+    ];
+    
+    // Display random productivity tip
+    function displayRandomTip() {
+      const tipElement = document.getElementById('productivityTip');
+      const randomTip = tips[Math.floor(Math.random() * tips.length)];
+      tipElement.textContent = randomTip;
+    }
+    
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      displayBlockedUrl();
+      displayRandomTip();
+    });
+  </script>
+</body>
+</html>
